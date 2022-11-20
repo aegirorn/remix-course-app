@@ -1,3 +1,4 @@
+
 import {
   Form,
   Link,
@@ -11,7 +12,6 @@ import {
 function ExpenseForm() {
   const today = new Date().toISOString().slice(0, 10); // yields something like 2023-09-10
   const validationErrors = useActionData();
-  const navigation = useNavigation();
   // const expenseData = useLoaderData();
   const params = useParams();
   const matches = useMatches();
@@ -24,6 +24,8 @@ function ExpenseForm() {
     // throw new Response();
     return <p>Invalid expense id.</p>;
   }
+
+  const navigation = useNavigation();
 
   const defaultValues = expenseData
     ? {
@@ -105,7 +107,10 @@ function ExpenseForm() {
         </ul>
       )}
       <div className="form-actions">
-        <button disabled={isSubmitting}>
+        <button
+          disabled={isSubmitting}
+          formMethod={expenseData ? 'patch' : 'post'}
+        >
           {isSubmitting ? 'Saving...' : 'Save Expense'}
         </button>
         <Link to="..">Cancel</Link>
